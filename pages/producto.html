@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detalle de producto | PVCPanel Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="../styles/producto.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="container navbar">
+      <div class="logo">PVCPanel Pro</div>
+      <nav class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="sobre-nosotros.html">Sobre nosotros</a>
+        <a href="index.html#contacto">Contacto</a>
+      </nav>
+      <a href="catalogo.html" class="nav-cta">Ver catálogo</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Breadcrumb / cabecera -->
+    <section class="container page-hero">
+      <div class="breadcrumb">Inicio · Catálogo · Detalle de producto</div>
+    </section>
+
+    <!-- Detalle de producto -->
+    <section class="container" id="productDetailContainer">
+      <!-- Se rellena con JS -->
+    </section>
+
+    <!-- Mensaje si no encuentra el producto -->
+    <section class="empty-state" id="productNotFound" style="display:none;">
+      No hemos encontrado este producto.<br /><br />
+      <a href="catalogo.html" style="color:#2563eb; font-weight:500;">Volver al catálogo</a>
+    </section>
+
+    <!-- Información adicional del producto -->
+    <section class="product-extra" id="productExtraSection" style="display:none;">
+      <div class="container extra-grid">
+        <div class="extra-block" id="productApplications"></div>
+        <div class="extra-block" id="productAdvice"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">PVCPanel Pro</div>
+          <p>Especialistas en planchas de PVC para proyectos de reforma, rotulación y soluciones ligeras en interior y exterior.</p>
+        </div>
+        <div>
+          <h4 style="color:#e5e7eb; margin-bottom:6px; font-size:0.9rem;">Enlaces</h4>
+          <div class="footer-links">
+            <a href="../index.html">Inicio</a>
+            <a href="./catalogo.html">Catálogo</a>
+            <a href="./sobre-nosotros.html">Sobre nosotros</a>
+            <a href="../index.html#contacto">Contacto</a>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:#e5e7eb; margin-bottom:6px; font-size:0.9rem;">Legal</h4>
+          <div class="footer-links">
+            <a href="./legal.html#aviso-legal">Aviso legal</a>
+            <a href="./legal.html#privacidad">Política de privacidad</a>
+            <a href="./legal.html#cookies">Política de cookies</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PVCPanel Pro. Todos los derechos reservados.</span>
+        <span>Desarrollado por AppXpand</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS: reutiliza products.js y muestra el producto según el id de la URL -->
+  <script src="../scripts/products.js"></script>
+  <script src="../Scripts/products.js"></script>
+<script>
+  function getProductIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    return id ? Number(id) : null;
+  }
+
+  // ← ← FUNCIÓN FALTANTE
+  function changeMainImage(thumb) {
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+    const mainImg = document.querySelector('.product-image img');
+    mainImg.src = thumb.dataset.main;
+    mainImg.alt = thumb.querySelector('img').alt;
+  }
+
+  function renderProductDetail(product) {
+    const container = document.getElementById("productDetailContainer");
+    const extraSection = document.getElementById("productExtraSection");
+    const apps = document.getElementById("productApplications");
+    const advice = document.getElementById("productAdvice");
+
+    const uses = product.usage.map(u => u.charAt(0).toUpperCase() + u.slice(1)).join(" · ");
+    const mainImage = product.images?.[0] || product.image;  // ← CAMBIO
+
+    container.innerHTML = `
+      <div class="product-layout">
+        <div class="product-media">
+          <div class="gallery-main">  <!-- ← CAMBIO -->
+            <div class="product-image">
+              <img src="${mainImage}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">
+            </div>
+            ${product.images && product.images.length > 1 ? `  <!-- ← CAMBIO -->
+              <div class="gallery-thumbs">
+                ${product.images.map((img, i) => `
+                  <div class="gallery-thumb ${i===0 ? 'active' : ''}" data-main="${img}" onclick="changeMainImage(this)">
+                    <img src="${img}" alt="Vista ${i+1}">
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+          <div class="product-mini-info">
+            Ref. PVC-${product.id.toString().padStart(4,"0")} · ${product.images?.length || 1} foto${product.images?.length > 1 ? 's' : ''}
+          </div>
+        </div>
+        <div class="product-info">
+          <h1 class="product-title">${product.name}</h1>
+          <p class="product-tagline">${product.tag}</p>
+          <div class="product-meta">Grosor: <strong>${product.thickness} mm</strong></div>
+          <div class="product-meta">Color: <strong>${product.color}</strong></div>
+          <div class="product-meta">Uso recomendado: ${uses}</div>
+          <div style="margin-top:8px;">
+            ${product.recommended ? '<span class="pill">Recomendado</span>' : ""}
+            ${product.thickness >= 10 ? '<span class="pill" style="background:#dcfce7;color:#15803d;">Alta resistencia</span>' : ""}
+          </div>
+          <div class="product-price-block">
+            <div class="product-price-main">${product.price.toFixed(2)} € / unidad</div>
+            <div class="product-note">IVA no incluido. Precio orientativo.</div>
+          </div>
+          <div style="margin-top:18px;">
+            <button class="btn-primary" onclick="window.location.href='../index.html#contacto'">Pedir presupuesto</button>
+            <button class="btn-secondary" onclick="window.history.back()">Volver</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    apps.innerHTML = `<h2 style="font-size:1.1rem;margin-bottom:8px;">Para qué sirve</h2><p>Proyectos de ${uses.toLowerCase()}.</p>`;
+    advice.innerHTML = `<h2 style="font-size:1.1rem;margin-bottom:8px;">Cómo usarlo</h2><p>Corta con cúter o sierra. Usa protección.</p>`;
+    extraSection.style.display = "block";
+  }
+
+  function initProductDetail() {
+    const id = getProductIdFromUrl();
+    const notFound = document.getElementById("productNotFound");
+
+    notFound.style.display = "none";
+
+    if (!id) {
+      notFound.style.display = "block";
+      return;
+    }
+
+    const product = products.find(p => p.id === id);
+    
+    if (!product) {
+      notFound.style.display = "block";
+      return;
+    }
+
+    renderProductDetail(product);
+  }
+
+  if (typeof products !== 'undefined') {
+    initProductDetail();
+  } else {
+    window.addEventListener('load', initProductDetail);
+  }
+</script>
+
+</body>
+</html>

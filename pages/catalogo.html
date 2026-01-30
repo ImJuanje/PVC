@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Catálogo de planchas de PVC | PVCPanel Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="../styles/catalogo.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="container navbar">
+      <div class="logo">PVCPanel Pro</div>
+      <nav class="nav-links">
+        <a href="../index.html">Inicio</a>
+        <a href="#">Catálogo</a>
+        <a href="../pages/sobre-nosotros.html">Sobre nosotros</a>
+        <a href="../index.html#contacto">Contacto</a>
+      </nav>
+      <a href="#" class="nav-cta">Ver catálogo</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero catálogo -->
+    <section class="container page-hero">
+      <div class="breadcrumb">Inicio · Catálogo</div>
+      <h1>Catálogo de planchas de PVC</h1>
+      <p>
+        Explora todas nuestras planchas de PVC organizadas por uso, grosor, color y precio.  
+        Usa los filtros para encontrar rápidamente el material que encaja con tu proyecto.
+      </p>
+    </section>
+
+    <!-- Catálogo con filtros -->
+    <section class="section">
+      <div class="container catalog-layout">
+
+        <!-- Panel filtros -->
+        <aside class="filters-panel">
+          <div class="filters-header">
+            <h2>Filtrar productos</h2>
+            <button id="clearFiltersBtn" type="button">Limpiar filtros</button>
+          </div>
+
+          <!-- Buscador -->
+          <div class="filter-group">
+            <label for="searchInput">Buscar (nombre o uso)</label>
+            <input type="text" id="searchInput" placeholder="Ej: rotulación, exterior, 5 mm..." />
+          </div>
+
+          <!-- Uso -->
+          <div class="filter-group">
+            <label>Uso principal</label>
+            <div class="filter-checkboxes" id="usageChips">
+              <button type="button" class="filter-chip" data-usage="interior">Interior</button>
+              <button type="button" class="filter-chip" data-usage="exterior">Exterior</button>
+              <button type="button" class="filter-chip" data-usage="rotulacion">Rotulación</button>
+              <button type="button" class="filter-chip" data-usage="revestimiento">Revestimiento</button>
+              <button type="button" class="filter-chip" data-usage="diy">DIY / Bricolaje</button>
+            </div>
+          </div>
+
+          <!-- Grosor -->
+          <div class="filter-group">
+            <label for="thicknessSelect">Grosor (mm)</label>
+            <select id="thicknessSelect">
+              <option value="">Todos</option>
+              <option value="3">3 mm</option>
+              <option value="4">4 mm</option>
+              <option value="5">5 mm</option>
+              <option value="8">8 mm</option>
+              <option value="10">10 mm</option>
+              <option value="15">15 mm</option>
+              <option value="19">19 mm</option>
+            </select>
+          </div>
+
+          <!-- Color -->
+          <div class="filter-group">
+            <label for="colorSelect">Color</label>
+            <select id="colorSelect">
+              <option value="">Todos</option>
+              <option value="blanco">Blanco</option>
+              <option value="gris">Gris</option>
+              <option value="negro">Negro</option>
+              <option value="antracita">Antracita</option>
+              <option value="rojo">Rojo</option>
+              <option value="azul">Azul</option>
+            </select>
+          </div>
+
+          <!-- Rango de precio -->
+          <div class="filter-group">
+            <label>Precio (por unidad)</label>
+            <div class="filter-row">
+              <input type="number" id="minPrice" placeholder="Mín." min="0" step="1" />
+              <input type="number" id="maxPrice" placeholder="Máx." min="0" step="1" />
+            </div>
+          </div>
+
+          <!-- Ordenación -->
+          <div class="filter-group">
+            <label for="sortSelect">Ordenar por</label>
+            <select id="sortSelect">
+              <option value="recomendado">Recomendado</option>
+              <option value="precio-asc">Precio: más bajo primero</option>
+              <option value="precio-desc">Precio: más alto primero</option>
+              <option value="grosor-asc">Grosor: menor a mayor</option>
+              <option value="grosor-desc">Grosor: mayor a menor</option>
+            </select>
+          </div>
+        </aside>
+
+        <!-- Listado de productos -->
+        <section>
+          <div class="products-header">
+            <div class="products-header-left">
+              <span id="productsCount"></span>
+              <span class="badge" id="activeFiltersBadge" style="display:none;"></span>
+            </div>
+          </div>
+
+          <div id="productsGrid" class="products-grid">
+            <!-- Productos generados por JS -->
+          </div>
+
+          <div id="emptyState" class="empty-state" style="display:none;">
+            No hay productos que coincidan con los filtros seleccionados.  
+            Prueba a ampliar el rango de precio o quitar algún filtro.
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="../scripts/products.js"></script>
+  <script src="../scripts/catalogo.js"></script>
+</body>
+</html>
